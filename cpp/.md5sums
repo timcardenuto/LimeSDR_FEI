@@ -1,0 +1,12 @@
+84a8b4dd55b0bb046b6135e6e54b683c  main.cpp
+2b2faa5cfc83438427491f4be5d6ee59  build.sh
+8806bf0f06e50e6d1407798789654834  LimeSDR_FEI_base.h
+8bfcd22353c3a57fee561ad86ee2a56b  reconf
+3b08dfe6a93211b70e6f052dbf583542  configure.ac
+3794d396cf0a13810b91e7ae16e1bdf1  template_impl.cpp
+05f6daecb09944901a4247ef551f3df0  LimeSDR_FEI.h
+1fc3f5afa321e3cd99fc3cc75ec0c100  Makefile.am
+e9496e6b24c311c3f1f371a14f4e9f79  struct_props.h
+ac7a598cdf94db7dd598efb4dc0a4585  Makefile.am.ide
+ab7da25f138a96a4171698b6a796c699  LimeSDR_FEI_base.cpp
+1484d154e063cc0edf4339430900b43a  LimeSDR_FEI.cpp
