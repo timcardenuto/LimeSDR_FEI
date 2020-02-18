@@ -13,7 +13,171 @@
 #include <bulkio/bulkio.h>
 typedef bulkio::connection_descriptor_struct connection_descriptor_struct;
 
-#include <frontend/fe_tuner_struct_props.h>
+struct frontend_listener_allocation_struct {
+    frontend_listener_allocation_struct ()
+    {
+    }
+
+    static std::string getId() {
+        return std::string("FRONTEND::listener_allocation");
+    }
+
+    static const char* getFormat() {
+        return "ss";
+    }
+
+    std::string existing_allocation_id;
+    std::string listener_allocation_id;
+};
+
+inline bool operator>>= (const CORBA::Any& a, frontend_listener_allocation_struct& s) {
+    CF::Properties* temp;
+    if (!(a >>= temp)) return false;
+    const redhawk::PropertyMap& props = redhawk::PropertyMap::cast(*temp);
+    if (props.contains("FRONTEND::listener_allocation::existing_allocation_id")) {
+        if (!(props["FRONTEND::listener_allocation::existing_allocation_id"] >>= s.existing_allocation_id)) return false;
+    }
+    if (props.contains("FRONTEND::listener_allocation::listener_allocation_id")) {
+        if (!(props["FRONTEND::listener_allocation::listener_allocation_id"] >>= s.listener_allocation_id)) return false;
+    }
+    return true;
+}
+
+inline void operator<<= (CORBA::Any& a, const frontend_listener_allocation_struct& s) {
+    redhawk::PropertyMap props;
+ 
+    props["FRONTEND::listener_allocation::existing_allocation_id"] = s.existing_allocation_id;
+ 
+    props["FRONTEND::listener_allocation::listener_allocation_id"] = s.listener_allocation_id;
+    a <<= props;
+}
+
+inline bool operator== (const frontend_listener_allocation_struct& s1, const frontend_listener_allocation_struct& s2) {
+    if (s1.existing_allocation_id!=s2.existing_allocation_id)
+        return false;
+    if (s1.listener_allocation_id!=s2.listener_allocation_id)
+        return false;
+    return true;
+}
+
+inline bool operator!= (const frontend_listener_allocation_struct& s1, const frontend_listener_allocation_struct& s2) {
+    return !(s1==s2);
+}
+
+struct frontend_tuner_allocation_struct {
+    frontend_tuner_allocation_struct ()
+    {
+    }
+
+    static std::string getId() {
+        return std::string("FRONTEND::tuner_allocation");
+    }
+
+    static const char* getFormat() {
+        return "ssdddddbss";
+    }
+
+    std::string tuner_type;
+    std::string allocation_id;
+    double center_frequency;
+    double bandwidth;
+    double bandwidth_tolerance;
+    double sample_rate;
+    double sample_rate_tolerance;
+    bool device_control;
+    std::string group_id;
+    std::string rf_flow_id;
+};
+
+inline bool operator>>= (const CORBA::Any& a, frontend_tuner_allocation_struct& s) {
+    CF::Properties* temp;
+    if (!(a >>= temp)) return false;
+    const redhawk::PropertyMap& props = redhawk::PropertyMap::cast(*temp);
+    if (props.contains("FRONTEND::tuner_allocation::tuner_type")) {
+        if (!(props["FRONTEND::tuner_allocation::tuner_type"] >>= s.tuner_type)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::allocation_id")) {
+        if (!(props["FRONTEND::tuner_allocation::allocation_id"] >>= s.allocation_id)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::center_frequency")) {
+        if (!(props["FRONTEND::tuner_allocation::center_frequency"] >>= s.center_frequency)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::bandwidth")) {
+        if (!(props["FRONTEND::tuner_allocation::bandwidth"] >>= s.bandwidth)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::bandwidth_tolerance")) {
+        if (!(props["FRONTEND::tuner_allocation::bandwidth_tolerance"] >>= s.bandwidth_tolerance)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::sample_rate")) {
+        if (!(props["FRONTEND::tuner_allocation::sample_rate"] >>= s.sample_rate)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::sample_rate_tolerance")) {
+        if (!(props["FRONTEND::tuner_allocation::sample_rate_tolerance"] >>= s.sample_rate_tolerance)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::device_control")) {
+        if (!(props["FRONTEND::tuner_allocation::device_control"] >>= s.device_control)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::group_id")) {
+        if (!(props["FRONTEND::tuner_allocation::group_id"] >>= s.group_id)) return false;
+    }
+    if (props.contains("FRONTEND::tuner_allocation::rf_flow_id")) {
+        if (!(props["FRONTEND::tuner_allocation::rf_flow_id"] >>= s.rf_flow_id)) return false;
+    }
+    return true;
+}
+
+inline void operator<<= (CORBA::Any& a, const frontend_tuner_allocation_struct& s) {
+    redhawk::PropertyMap props;
+ 
+    props["FRONTEND::tuner_allocation::tuner_type"] = s.tuner_type;
+ 
+    props["FRONTEND::tuner_allocation::allocation_id"] = s.allocation_id;
+ 
+    props["FRONTEND::tuner_allocation::center_frequency"] = s.center_frequency;
+ 
+    props["FRONTEND::tuner_allocation::bandwidth"] = s.bandwidth;
+ 
+    props["FRONTEND::tuner_allocation::bandwidth_tolerance"] = s.bandwidth_tolerance;
+ 
+    props["FRONTEND::tuner_allocation::sample_rate"] = s.sample_rate;
+ 
+    props["FRONTEND::tuner_allocation::sample_rate_tolerance"] = s.sample_rate_tolerance;
+ 
+    props["FRONTEND::tuner_allocation::device_control"] = s.device_control;
+ 
+    props["FRONTEND::tuner_allocation::group_id"] = s.group_id;
+ 
+    props["FRONTEND::tuner_allocation::rf_flow_id"] = s.rf_flow_id;
+    a <<= props;
+}
+
+inline bool operator== (const frontend_tuner_allocation_struct& s1, const frontend_tuner_allocation_struct& s2) {
+    if (s1.tuner_type!=s2.tuner_type)
+        return false;
+    if (s1.allocation_id!=s2.allocation_id)
+        return false;
+    if (s1.center_frequency!=s2.center_frequency)
+        return false;
+    if (s1.bandwidth!=s2.bandwidth)
+        return false;
+    if (s1.bandwidth_tolerance!=s2.bandwidth_tolerance)
+        return false;
+    if (s1.sample_rate!=s2.sample_rate)
+        return false;
+    if (s1.sample_rate_tolerance!=s2.sample_rate_tolerance)
+        return false;
+    if (s1.device_control!=s2.device_control)
+        return false;
+    if (s1.group_id!=s2.group_id)
+        return false;
+    if (s1.rf_flow_id!=s2.rf_flow_id)
+        return false;
+    return true;
+}
+
+inline bool operator!= (const frontend_tuner_allocation_struct& s1, const frontend_tuner_allocation_struct& s2) {
+    return !(s1==s2);
+}
 
 namespace enums {
     // Enumerated values for FRONTEND::tuner_status_struct
@@ -26,8 +190,8 @@ namespace enums {
     }
 }
 
-struct frontend_tuner_status_struct_struct : public frontend::default_frontend_tuner_status_struct_struct {
-    frontend_tuner_status_struct_struct () : frontend::default_frontend_tuner_status_struct_struct()
+struct frontend_tuner_status_struct_struct {
+    frontend_tuner_status_struct_struct ()
     {
     }
 
@@ -40,19 +204,27 @@ struct frontend_tuner_status_struct_struct : public frontend::default_frontend_t
     }
 
     bool agc;
+    std::string allocation_id_csv;
     std::string available_bandwidth;
     std::string available_frequency;
     std::string available_gain;
     std::string available_sample_rate;
+    double bandwidth;
     double bandwidth_tolerance;
+    double center_frequency;
     bool complex;
     CORBA::Long decimation;
+    bool enabled;
     double gain;
+    std::string group_id;
     CORBA::Long reference_source;
+    std::string rf_flow_id;
+    double sample_rate;
     double sample_rate_tolerance;
     bool scan_mode_enabled;
     bool supports_scan;
     short tuner_number;
+    std::string tuner_type;
     bool valid;
 };
 

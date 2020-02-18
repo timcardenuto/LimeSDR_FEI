@@ -233,4 +233,9 @@ False: Does not need control and can just attach to any currently tasked device 
     <kind kindtype="property"/>
     <action type="external"/>
   </simple>
+  <simple id="reset" mode="readwrite" name="reset" type="boolean">
+    <value>false</value>
+    <kind kindtype="property"/>
+    <action type="external"/>
+  </simple>
 </properties>

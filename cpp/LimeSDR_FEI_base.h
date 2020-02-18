@@ -2,17 +2,19 @@
 #define LIMESDR_FEI_BASE_IMPL_BASE_H
 
 #include <boost/thread.hpp>
-#include <frontend/frontend.h>
+#include <ossie/Device_impl.h>
 #include <ossie/ThreadedComponent.h>
 
-#include <frontend/frontend.h>
+#include "port_impl.h"
 #include <bulkio/bulkio.h>
+#include <frontend/frontend.h>
 #include "struct_props.h"
 
-#define BOOL_VALUE_HERE 0
-
-class LimeSDR_FEI_base : public frontend::FrontendTunerDevice<frontend_tuner_status_struct_struct>, public virtual frontend::digital_tuner_delegation, public virtual frontend::rfinfo_delegation, protected ThreadedComponent
+class LimeSDR_FEI_base : public Device_impl, protected ThreadedComponent
 {
+    friend class FRONTEND_RFInfo_In_i;
+    friend class FRONTEND_DigitalTuner_In_i;
+
     public:
         LimeSDR_FEI_base(char *devMgr_ior, char *id, char *lbl, char *sftwrPrfl);
         LimeSDR_FEI_base(char *devMgr_ior, char *id, char *lbl, char *sftwrPrfl, char *compDev);
@@ -27,23 +29,27 @@ class LimeSDR_FEI_base : public frontend::FrontendTunerDevice<frontend_tuner_sta
         void releaseObject() throw (CF::LifeCycle::ReleaseError, CORBA::SystemException);
 
         void loadProperties();
-        void matchAllocationIdToStreamId(const std::string allocation_id, const std::string stream_id, const std::string port_name="");
-        void removeAllocationIdRouting(const size_t tuner_id);
-        void removeStreamIdRouting(const std::string stream_id, const std::string allocation_id="");
-
-        virtual CF::Properties* getTunerStatus(const std::string& allocation_id);
-        virtual void assignListener(const std::string& listen_alloc_id, const std::string& allocation_id);
-        virtual void removeListener(const std::string& listen_alloc_id);
-        void frontendTunerStatusChanged(const std::vector<frontend_tuner_status_struct_struct>* oldValue, const std::vector<frontend_tuner_status_struct_struct>* newValue);
 
     protected:
         void connectionTableChanged(const std::vector<connection_descriptor_struct>* oldValue, const std::vector<connection_descriptor_struct>* newValue);
 
         // Member variables exposed as properties
+        /// Property: device_kind
+        std::string device_kind;
+        /// Property: device_model
+        std::string device_model;
         /// Property: oversample_ratio
         short oversample_ratio;
         /// Property: device_addr
         std::string device_addr;
+        /// Property: reset
+        bool reset;
+        /// Property: frontend_listener_allocation
+        frontend_listener_allocation_struct frontend_listener_allocation;
+        /// Property: frontend_tuner_allocation
+        frontend_tuner_allocation_struct frontend_tuner_allocation;
+        /// Property: frontend_tuner_status
+        std::vector<frontend_tuner_status_struct_struct> frontend_tuner_status;
         /// Property: connectionTable
         std::vector<connection_descriptor_struct> connectionTable;
         /// Property: device_channels
@@ -51,11 +57,11 @@ class LimeSDR_FEI_base : public frontend::FrontendTunerDevice<frontend_tuner_sta
 
         // Ports
         /// Port: RFInfo_in
-        frontend::InRFInfoPort *RFInfo_in;
+        FRONTEND_RFInfo_In_i *RFInfo_in;
         /// Port: RFInfo_in_2
-        frontend::InRFInfoPort *RFInfo_in_2;
+        FRONTEND_RFInfo_In_i *RFInfo_in_2;
         /// Port: DigitalTuner_in
-        frontend::InDigitalTunerPort *DigitalTuner_in;
+        FRONTEND_DigitalTuner_In_i *DigitalTuner_in;
         /// Port: dataFloatTX_in
         bulkio::InFloatPort *dataFloatTX_in;
         /// Port: dataFloatTX_in_2
@@ -66,8 +72,6 @@ class LimeSDR_FEI_base : public frontend::FrontendTunerDevice<frontend_tuner_sta
         frontend::OutRFInfoPort *RFInfoTX_out;
         /// Port: RFInfoTX_out_2
         frontend::OutRFInfoPort *RFInfoTX_out_2;
-
-        std::map<std::string, std::string> listeners;
 
     private:
         void construct();

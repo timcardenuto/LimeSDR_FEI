@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE softpkg PUBLIC "-//JTRS//DTD SCA V2.2.2 SPD//EN" "softpkg.dtd">
-<softpkg id="DCE:312296b1-08a0-429a-88cb-0091686ad062" name="LimeSDR_FEI" type="2.1.2">
+<softpkg id="DCE:312296b1-08a0-429a-88cb-0091686ad062" name="LimeSDR_FEI" type="2.2.3">
   <title></title>
   <author>
     <name>null</name>

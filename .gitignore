@@ -19,4 +19,8 @@ configure.lineno
 config.status.lineno
 ./.deps
 Makefile
-
+.cproject
+.project
+.pydevproject
+.settings/
+.LimeSDR_FEI.wavedev
